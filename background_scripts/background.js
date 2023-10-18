@@ -39,7 +39,7 @@ async function validKEY(key){
 }
 
 async function fetchData(tabs) {
-    const numRuns = (tabs.length % 50) + 1 // Something im misunderstanding here lol. Gives 8 runs for 57 which should give one run.
+    const numRuns = Math.ceil(tabs.length / 50) 
 
     const items = []
     for(let i = 0; i < numRuns; i++){
