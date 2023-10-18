@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "YTsort",
+  "version": "1.2",
+  "description": "Sorts youtube tabs based on duration of video",
+  "icons": {
+    "48": "icons/icon-48.png"
+  },
+  "permissions": [
+    "webRequest",
+    "activeTab",
+    "tabs",
+    "storage",
+    "https://www.googleapis.com/*"
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-48.png",
+    "default_title": "Youtube Sorter",
+    "default_popup": "background_scripts/background.html"
+  },
+  "background": {
+    "page": "background_scripts/background.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{3438f005-f503-43dc-98c6-bfcc63cc0bb9}"
+    }
+  }
+}
