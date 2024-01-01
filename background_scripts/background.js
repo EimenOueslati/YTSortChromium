@@ -39,6 +39,7 @@ async function validKEY(key){
 }
 
 async function fetchData(tabs) {
+	//Batching the ids array into batches of 50 to comply with the youtude API limitations
     const numRuns = Math.ceil(tabs.length / 50) 
 
     const items = []
@@ -54,6 +55,7 @@ async function fetchData(tabs) {
         // Actually fetching the timestamps 
         const currIDS = tabs.slice(start, stop)
         const url = `https://www.googleapis.com/youtube/v3/videos?id=${currIDS.toString()}&part=contentDetails&key=${API_KEY}`
+		//Youtub's API for fetching video info allows for batch processing with CSV
         const result = await fetch(url).then((data) => data.json()).then((json) => json.items).catch((e) => {tabCount.innerText="BORKED"+e; return})
         
         // Adding to list
@@ -95,9 +97,12 @@ async function sort(){
 
 // Convert "PT18M6S" to 1086 (seconds) ISO-8601
 function parseDuration(charset){
+	//this regex will only extract the value for days, hours, minuites, and seconds omitting months and years since the longest youtube
+	//video ever created was 596.5 hourse approx 24 days and as of now youtube has a max video length/size of 12h or 256GB
 	const numRegex = /^P(?:([-+]?\d+)D)?(?:T(?:([-+]?\d+)H)?(?:([-+]?\d+)M)?(?:([-+]?\d+(?:\.\d+)?)S)?)?$/;
 
   	const values = charset.match(numRegex);
+	//map the vlues to their corresponding time unit.
   	const [, days, hours, minutes, seconds] = values.map(Number);
   	let duration = 0;
   	if(!isNaN(days)) duration += days * 86400;
