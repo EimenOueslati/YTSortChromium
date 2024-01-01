@@ -94,19 +94,19 @@ async function sort(){
 }
 
 // Convert "PT18M6S" to 1086 (seconds) ISO-8601
-// Pretty sure there are a bunch of edge cases not handled here
 function parseDuration(charset){
-	const numberPattern = /\d+/g;
-	const nums = charset.match(numberPattern)
+	const numRegex = /^P(?:([-+]?\d+)D)?(?:T(?:([-+]?\d+)H)?(?:([-+]?\d+)M)?(?:([-+]?\d+(?:\.\d+)?)S)?)?$/;
 
-	return calculateDuration(nums, 1, nums.length)
+  	const values = charset.match(numRegex);
+  	const [, days, hours, minutes, seconds] = values.map(Number);
+  	let duration = 0;
+  	if(!isNaN(days)) duration += days * 86400;
+  	if(!isNaN(hours)) duration += hours * 3600;
+  	if(!isNaN(minutes)) duration += minutes * 60;
+  	if(!isNaN(seconds)) duration += seconds;
+  	return duration;
 }
 
-// Calculate duration in seconds. Flexible between 1 and 3 digits in arr.
-function calculateDuration(arr, count, total){
-	if (count == total+1) return 0
-	return arr[count-1] * Math.pow(60, total-count) + calculateDuration(arr, count+1, total)
-}
 
 function compareDuration(a,b){
 	if (b.duration > a.duration) {
