@@ -20,10 +20,5 @@
   },
   "background": {
     "page": "background_scripts/background.html"
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{3438f005-f503-43dc-98c6-bfcc63cc0bb9}"
-    }
   }
 }
