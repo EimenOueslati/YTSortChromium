@@ -10,7 +10,9 @@
     "webRequest",
     "activeTab",
     "tabs",
-    "storage",
+    "storage"
+  ],
+  "host_permissions": [
     "https://www.googleapis.com/*"
   ],
   "browser_action": {
@@ -18,6 +20,7 @@
     "default_title": "Youtube Sorter",
     "default_popup": "background_scripts/background.html"
   },
+  
   "background": {
     "page": "background_scripts/background.html"
   }
