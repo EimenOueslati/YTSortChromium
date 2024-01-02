@@ -15,7 +15,7 @@
   "host_permissions": [
     "https://www.googleapis.com/*"
   ],
-  "browser_action": {
+  "action": {
     "default_icon": "icons/icon-48.png",
     "default_title": "Youtube Sorter",
     "default_popup": "background_scripts/background.html"
