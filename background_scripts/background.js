@@ -27,7 +27,7 @@ chrome.storage.local.get(["key"], function(result) {
 	const valid = await validKEY(textbox.value)
 
 	if(valid) {
-		localStorage.setItem("key", textbox.value)
+		chrome.storage.local.set({"key": textbox.value})
 		API_KEY = textbox.value
 		sortBTN.style.display = "block"
 		apiDIV.style.display = "none"
