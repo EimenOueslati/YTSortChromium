@@ -92,7 +92,7 @@ async function sort(){
   tabs.sort(compareDuration)
   chrome.tabs.move(
 	  tabs.map((tab) => {return tab.id;}),
-	  { index: 1}
+	  { index: -1}
   )
 
   tabCount.innerText = tabs.length
