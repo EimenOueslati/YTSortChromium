@@ -6,19 +6,22 @@ const tabCount = document.getElementById("tabCount")
 sortBTN.addEventListener('click', sort)
 apiBTN.addEventListener('click', addKEY)
 
-let API_KEY = localStorage.getItem("key")
-if (API_KEY != null && API_KEY != "null" && validKEY(API_KEY)) {
-	console.log("API KEY FOUND")
-	sortBTN.style.display = "block"
-	apiDIV.style.display = "none"
-} else {
-	console.log("NO API KEY!")
-	sortBTN.style.display = "none"
-	apiDIV.style.display = "block"
-}
+let API_KEY;
+chrome.storage.local.get(["key"], function(result) {
+	API_KEY = result.key;
+	if (API_KEY != null && API_KEY != "null" && validKEY(API_KEY)) {
+	  console.log("API KEY FOUND");
+	  sortBTN.style.display = "block";
+	  apiDIV.style.display = "none";
+	} else {
+	  console.log("NO API KEY!");
+	  sortBTN.style.display = "none";
+	  apiDIV.style.display = "block";
+	}
+  });
 
 
-async function addKEY(){
+  async function addKEY(){
 	const textbox = document.getElementById("api_key_field")
 	console.log(textbox.value)
 	const valid = await validKEY(textbox.value)
