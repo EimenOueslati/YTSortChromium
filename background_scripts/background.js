@@ -69,34 +69,35 @@ async function fetchData(tabs) {
 }
 
 async function sort(){
-  	console.log("SORTING...")
-	let tabs = await browser.tabs.query({currentWindow:true,url: "https://www.youtube.com/watch?v=*"}).then(result => result)
+	console.log("SORTING...")
+  let tabs = await chrome.tabs.query({currentWindow:true,url: "https://www.youtube.com/watch?v=*"}).then(result => result)
+  console.log(tabs)
+  if(tabs.length==0) return // Stop.
 
-	if(tabs.length==0) return // Stop.
+  // Get all IDS
+  let ids=[]
+  for(const tab of tabs){
+	  ids.push(tab.url.substr(32,11)) // 32 Chars until video ID
+  }
 
-	// Get all IDS
-	let ids=[]
-	for(const tab of tabs){
-		ids.push(tab.url.substr(32,11)) // 32 Chars until video ID
-	}
+  // Fetch durations
+  const items = await fetchData(ids)
+		  
+  // Append durations to tab list 
+  for(let i = 0; i < items.length; i++){
+	  tabs[i].duration = parseDuration(items[i].contentDetails.duration)
+  }
 
-	// Fetch durations
-    const items = await fetchData(ids)
-	        
-	// Append durations to tab list 
-	for(let i = 0; i < items.length; i++){
-		tabs[i].duration = parseDuration(items[i].contentDetails.duration)
-	}
+  // Sort and move tabs
+  tabs.sort(compareDuration)
+  chrome.tabs.move(
+	  tabs.map((tab) => {return tab.id;}),
+	  { index: 1}
+  )
 
-	// Sort and move tabs
-	tabs.sort(compareDuration)
-	browser.tabs.move(
-		tabs.map((tab) => {return tab.id;}),
-		{ index: 1}
-	)
-
-    tabCount.innerText = tabs.length
+  tabCount.innerText = tabs.length
 }
+
 
 // Convert "PT18M6S" to 1086 (seconds) ISO-8601
 function parseDuration(charset){
