@@ -16,3 +16,6 @@ Use that token when prompted for it in extension popup.
 
 ## Sort
 Click "sort" in the extension to sort all open YouTube tabs in order of duration.
+
+# Chrome
+The extension has been ported to chrome by [EimenOueslati](https://github.com/EimenOueslati/). You can get it [here](https://github.com/EimenOueslati/YTSortChromium/tree/ChromiumPort).
